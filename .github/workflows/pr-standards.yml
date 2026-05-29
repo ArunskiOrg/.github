@@ -43,3 +43,21 @@ jobs:
             echo "::error::See https://github.com/ArunskiOrg/RandomOrganizer2026/blob/main/.github/pull_request_template.md"
             exit 1
           fi
+
+  standards-review:
+    name: Standards review sign-off
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for /standards-review sign-off comment
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          signed_off=$(gh api "repos/$REPO/issues/$PR_NUMBER/comments" \
+            --jq '[.[].body | select(contains("standards review signed off by /standards-review"))] | length')
+          if [ "$signed_off" -eq 0 ]; then
+            echo "::error::No standards review sign-off found on this PR."
+            echo "::error::Run /standards-review in Claude Code to review the PR and post the sign-off comment."
+            exit 1
+          fi
