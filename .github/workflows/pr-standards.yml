@@ -1,0 +1,45 @@
+name: PR Standards
+
+on:
+  workflow_call:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+jobs:
+  title:
+    name: PR title format
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check title matches "#<number>: <description>"
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          if ! echo "$TITLE" | grep -qE '^#[0-9]+: .{5,}'; then
+            echo "::error::PR title must match '#<story-number>: <description>'"
+            echo "::error::Example: '#42: Add /query endpoint with Bedrock synthesis'"
+            echo "::error::Got: $TITLE"
+            exit 1
+          fi
+
+  body:
+    name: PR body sections
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check required template sections are present
+        env:
+          BODY: ${{ github.event.pull_request.body }}
+        run: |
+          missing=()
+          for section in "## Story" "## What changed" "## How to test locally" "## How to test in QA" "## Tests completed" "## Standards checklist"; do
+            if ! echo "$BODY" | grep -qF "$section"; then
+              missing+=("$section")
+            fi
+          done
+          if [ ${#missing[@]} -gt 0 ]; then
+            echo "::error::PR body is missing required sections from the PR template:"
+            for s in "${missing[@]}"; do
+              echo "::error::  $s"
+            done
+            echo "::error::See https://github.com/ArunskiOrg/RandomOrganizer2026/blob/main/.github/pull_request_template.md"
+            exit 1
+          fi
