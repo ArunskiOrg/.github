@@ -1,0 +1,52 @@
+name: Spike
+description: Time-boxed research or investigation to resolve uncertainty.
+title: "[Spike] "
+labels: ["spike"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Question to answer
+      description: What specific uncertainty does this spike resolve?
+    validations:
+      required: true
+
+  - type: input
+    id: time-box
+    attributes:
+      label: Time box
+      description: "e.g. 4 hours, 1 sprint"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-output
+    attributes:
+      label: Expected output
+      description: What artifact or decision will close this spike? (e.g. ADR, proof-of-concept, recommendation)
+    validations:
+      required: true
+
+  - type: input
+    id: parent-issue
+    attributes:
+      label: Parent issue
+      description: Link to the Story, Feature, or Epic that prompted this spike (if applicable).
+    validations:
+      required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: approval
+    attributes:
+      label: Closure checklist
+      options:
+        - label: Findings documented in issue comments
+        - label: Time box honored (or overrun explained)
+        - label: Resulting Decision, Story, or ADR issues opened (if applicable)

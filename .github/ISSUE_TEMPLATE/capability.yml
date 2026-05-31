@@ -1,0 +1,48 @@
+name: Capability
+description: A system capability — what the product must do to fulfill the vision.
+title: "[Capability] "
+labels: ["capability"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What must the system do? Be solution-neutral.
+    validations:
+      required: true
+
+  - type: input
+    id: vision-link
+    attributes:
+      label: Vision fulfillment
+      description: Link to the vision statement, success criterion, or stakeholder need this addresses.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: scope-flag
+    attributes:
+      label: Scope flag
+      options:
+        - core
+        - defer
+        - cut
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Constraints, assumptions, open questions.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: approval
+    attributes:
+      label: Approval checklist
+      options:
+        - label: Spec stub created
+        - label: architect-reviewer signed off
+        - label: product-manager signed off (no gold-plating)

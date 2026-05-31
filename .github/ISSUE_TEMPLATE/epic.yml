@@ -1,0 +1,35 @@
+name: Epic
+description: A group of related stories that together deliver a feature.
+title: "[Epic] "
+labels: ["epic"]
+body:
+  - type: input
+    id: parent-feature
+    attributes:
+      label: Parent feature
+      description: Link to the parent Feature issue.
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What does this epic accomplish within the feature?
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: approval
+    attributes:
+      label: Approval checklist
+      options:
+        - label: Linked to parent feature
+        - label: Stories identified as sub-issues
