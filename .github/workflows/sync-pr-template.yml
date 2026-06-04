@@ -1,0 +1,44 @@
+name: Sync PR template to product repos
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/pull_request_template.md']
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        repo:
+          - rag-sample
+          - rag-sample-app
+          - just-build-it
+          - just-build-it-app
+          - score-study
+          - score-study-app
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Push template to ${{ matrix.repo }}
+        env:
+          GH_TOKEN: ${{ secrets.ORG_SYNC_TOKEN }}
+        run: |
+          CONTENT=$(base64 -w 0 .github/pull_request_template.md)
+          SHA=$(gh api repos/ArunskiOrg/${{ matrix.repo }}/contents/.github/pull_request_template.md \
+            --jq '.sha' 2>/dev/null || true)
+
+          if [ -n "$SHA" ]; then
+            gh api --method PUT \
+              repos/ArunskiOrg/${{ matrix.repo }}/contents/.github/pull_request_template.md \
+              --field message="chore: sync PR template from RandomOrganizer2026" \
+              --field "content=$CONTENT" \
+              --field "sha=$SHA"
+          else
+            gh api --method PUT \
+              repos/ArunskiOrg/${{ matrix.repo }}/contents/.github/pull_request_template.md \
+              --field message="chore: sync PR template from RandomOrganizer2026" \
+              --field "content=$CONTENT"
+          fi
