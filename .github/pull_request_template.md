@@ -1,7 +1,5 @@
-## Story
-
-<!-- Link to the GitHub issue this PR delivers. -->
-Closes #
+<!-- Link to the GitHub issue this PR delivers. Note: "Fixes" may be substituted for "Closes" -->
+Closes ArunskiOrg/<planning project>#<issue-number>
 
 ## What changed
 
@@ -33,4 +31,4 @@ Closes #
 
 ---
 
-*PR template v1.0 — defined in [ArunskiOrg/RandomOrganizer2026](https://github.com/ArunskiOrg/RandomOrganizer2026/blob/main/.github/pull_request_template.md)*
+*PR template v1.2 — defined in [ArunskiOrg/RandomOrganizer2026](https://github.com/ArunskiOrg/RandomOrganizer2026/blob/main/.github/pull_request_template.md)*

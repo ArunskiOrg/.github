@@ -10,7 +10,7 @@ jobs:
     name: PR title format
     runs-on: ubuntu-latest
     steps:
-      - name: Check title matches "#<number>: <description>"
+      - name: 'Check title matches "#<number>: <description>"'
         env:
           TITLE: ${{ github.event.pull_request.title }}
         run: |
@@ -30,7 +30,7 @@ jobs:
           BODY: ${{ github.event.pull_request.body }}
         run: |
           missing=()
-          for section in "## Story" "## What changed" "## How to test locally" "## How to test in QA" "## Tests completed" "## Standards checklist"; do
+          for section in "## What changed" "## How to test locally" "## How to test in QA" "## Tests completed" "## Standards checklist"; do
             if ! echo "$BODY" | grep -qF "$section"; then
               missing+=("$section")
             fi
@@ -48,16 +48,19 @@ jobs:
     name: Standards review sign-off
     runs-on: ubuntu-latest
     steps:
-      - name: Check for /standards-review sign-off comment
+      - name: Check for /standards-review sign-off comment after latest commit
         env:
           GH_TOKEN: ${{ github.token }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           REPO: ${{ github.repository }}
         run: |
+          commit_time=$(gh api "repos/$REPO/commits/$PR_HEAD_SHA" --jq '.commit.committer.date')
           signed_off=$(gh api "repos/$REPO/issues/$PR_NUMBER/comments" \
-            --jq '[.[].body | select(contains("standards review signed off by /standards-review"))] | length')
+            --jq --arg t "$commit_time" \
+            '[.[] | select(.body | contains("standards review signed off by /standards-review")) | select(.created_at > $t)] | length')
           if [ "$signed_off" -eq 0 ]; then
-            echo "::error::No standards review sign-off found on this PR."
+            echo "::error::No standards review sign-off found after the latest commit ($PR_HEAD_SHA)."
             echo "::error::Run /standards-review in Claude Code to review the PR and post the sign-off comment."
             exit 1
           fi
