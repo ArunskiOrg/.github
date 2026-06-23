@@ -57,7 +57,7 @@ jobs:
         run: |
           commit_time=$(gh api "repos/$REPO/commits/$PR_HEAD_SHA" --jq '.commit.committer.date')
           signed_off=$(gh api "repos/$REPO/issues/$PR_NUMBER/comments" \
-            --jq --arg t "$commit_time" \
+            | jq --arg t "$commit_time" \
             '[.[] | select(.body | contains("standards review signed off by /standards-review")) | select(.created_at > $t)] | length')
           if [ "$signed_off" -eq 0 ]; then
             echo "::error::No standards review sign-off found after the latest commit ($PR_HEAD_SHA)."
