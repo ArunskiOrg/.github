@@ -1,13 +1,48 @@
 name: PR Standards
 
+# ─── How this workflow fires ────────────────────────────────────────────────
+#
+# Three triggers:
+#
+#   workflow_call   — called from a product repo's own pr-standards.yml caller.
+#                     The caller passes its event through, so the event_name
+#                     seen here is whatever triggered the caller (pull_request
+#                     or issue_comment).
+#
+#   pull_request    — fires directly when this reusable workflow is used
+#                     standalone (e.g. on this repo's own PRs).
+#
+#   issue_comment   — PR comments on GitHub are modeled as issue comments.
+#                     When a comment is posted on a PR, this trigger fires so
+#                     that trigger-on-comment can re-run the last pull_request
+#                     run, updating the PR status check to reflect the new
+#                     comment state (e.g. a sign-off was just posted).
+#
+#                     types includes "deleted" intentionally: if a sign-off
+#                     comment is deleted, the re-run re-evaluates and the check
+#                     reverts to failing rather than showing a stale pass.
+
 on:
   workflow_call:
   pull_request:
     types: [opened, edited, reopened, synchronize]
   issue_comment:
-    # "deleted" is intentional: if a sign-off comment is deleted, re-run so the
-    # check reflects the current comment state rather than a stale pass.
     types: [created, edited, deleted]
+
+# ─── Permissions model ──────────────────────────────────────────────────────
+#
+# GitHub Actions tokens are scoped by a permissions block. Job-level blocks
+# REPLACE (not extend) the workflow-level block for that job. This means every
+# job that needs pull-requests or issues access must either:
+#   (a) inherit from the workflow-level block (by not declaring its own), or
+#   (b) explicitly re-declare those permissions alongside any extras it needs.
+#
+# Workflow-level default (inherited by title, body, standards-review):
+#   pull-requests: read  — gh api calls against PR metadata
+#   issues: read         — gh api calls against issue comments
+#
+# trigger-on-comment overrides this block (see job-level permissions below)
+# and must therefore re-declare all three permissions it needs.
 
 permissions:
   pull-requests: read
@@ -15,15 +50,20 @@ permissions:
 
 jobs:
   trigger-on-comment:
+    # Only fire on comments that belong to a PR (not plain issue comments).
+    # github.event.issue.pull_request is populated only on PR-associated issues.
     if: github.event_name == 'issue_comment' && github.event.issue.pull_request != null
     runs-on: ubuntu-latest
     # No author-association guard: any commenter (including bots) can trigger a
     # re-run. This is intentional — sign-off detection is idempotent and
     # Actions minutes are not a concern on this private repo.
     permissions:
-      # Replaces (not extends) the workflow-level block for this job; other jobs
-      # inherit pull-requests: read and issues: read from the workflow level.
-      actions: write
+      # Job-level permissions REPLACE the workflow-level block entirely.
+      # Re-declare pull-requests and issues here, otherwise gh api calls in
+      # this job will get HTTP 403 — the token won't have those scopes.
+      pull-requests: read
+      issues: read
+      actions: write  # required for gh run rerun
     steps:
       - name: Re-run PR Standards on the PR head commit
         env:
