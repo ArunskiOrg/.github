@@ -4,8 +4,50 @@ on:
   workflow_call:
   pull_request:
     types: [opened, edited, reopened, synchronize]
+  issue_comment:
+    # "deleted" is intentional: if a sign-off comment is deleted, re-run so the
+    # check reflects the current comment state rather than a stale pass.
+    types: [created, edited, deleted]
+
+permissions:
+  pull-requests: read
+  issues: read
 
 jobs:
+  trigger-on-comment:
+    if: github.event_name == 'issue_comment' && github.event.issue.pull_request != null
+    runs-on: ubuntu-latest
+    # No author-association guard: any commenter (including bots) can trigger a
+    # re-run. This is intentional — sign-off detection is idempotent and
+    # Actions minutes are not a concern on this private repo.
+    permissions:
+      # Replaces (not extends) the workflow-level block for this job; other jobs
+      # inherit pull-requests: read and issues: read from the workflow level.
+      actions: write
+    steps:
+      - name: Re-run PR Standards on the PR head commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          PR_BRANCH=$(gh api "repos/$REPO/pulls/$PR_NUMBER" --jq '.head.ref')
+          RUN_ID=$(gh run list \
+            --repo "$REPO" \
+            --workflow "pr-standards.yml" \
+            --branch "$PR_BRANCH" \
+            --event pull_request \
+            --status completed \
+            --limit 1 \
+            --json databaseId \
+            --jq '.[0].databaseId')
+          if [[ "$RUN_ID" =~ ^[0-9]+$ ]]; then
+            gh run rerun "$RUN_ID" --repo "$REPO" || \
+              echo "::warning::Could not re-run $RUN_ID"
+          else
+            echo "::warning::No completed pull_request run found for branch $PR_BRANCH — skipping rerun"
+          fi
+
   title:
     name: PR title format
     if: github.event_name != 'issue_comment'
