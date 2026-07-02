@@ -39,6 +39,8 @@ jobs:
   body:
     name: PR body sections
     runs-on: ubuntu-latest
+    # dependabot has its own format
+    if: github.actor != 'dependabot[bot]'
     steps:
       - name: Check required template sections are present
         env:
