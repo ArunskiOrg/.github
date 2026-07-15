@@ -22,6 +22,10 @@ on:
         description: "Node.js version to run the upgrade with"
         type: string
         default: "24"
+      story-number:
+        description: "Story number to prefix the PR title/commit with, per pr-standards.yml's `#<number>: <description>` title check"
+        type: string
+        default: "165"
   workflow_dispatch:
     inputs:
       working-directory:
@@ -32,6 +36,10 @@ on:
         description: "Node.js version to run the upgrade with"
         type: string
         default: "24"
+      story-number:
+        description: "Story number to prefix the PR title/commit with, per pr-standards.yml's `#<number>: <description>` title check"
+        type: string
+        default: "165"
 
 permissions:
   contents: write
@@ -56,14 +64,34 @@ jobs:
       - name: Open PR if anything changed
         uses: peter-evans/create-pull-request@v6
         with:
-          commit-message: "Upgrade astro via @astrojs/upgrade"
-          title: "chore(${{ inputs.working-directory }}): astro upgrade"
+          commit-message: "#${{ inputs.story-number }}: Upgrade astro via @astrojs/upgrade"
+          title: "#${{ inputs.story-number }}: chore(${{ inputs.working-directory }}): astro upgrade"
           body: |
-            Automated run of `npx @astrojs/upgrade --yes` in `${{ inputs.working-directory }}/`.
+            Closes ArunskiOrg/rag-sample#${{ inputs.story-number }}
 
-            Review the diff before merging — this is the project's standard
-            upgrade path and keeps astro plus its official integrations in sync,
-            instead of piecemeal dependabot bumps.
+            ## What changed
+
+            Automated run of `npx @astrojs/upgrade --yes` in `${{ inputs.working-directory }}/`.
+            Keeps astro and its official integrations in sync via the project's
+            standard upgrade path, instead of piecemeal dependabot bumps.
+
+            ## How to test locally
+
+            `cd ${{ inputs.working-directory }} && npm install && npm run build`
+
+            ## How to test in QA
+
+            Same as local.
+
+            ## Tests completed
+
+            - [ ] Manual smoke test performed — review the diff and confirm the build passes before merging
+
+            ## Standards checklist
+
+            - [x] PR title matches `#<story-number>: <description>`
+            - [x] Tests use Given / When / Then structure — N/A (no test code in this PR)
+            - [x] Any new app-to-app interface has an OpenAPI contract — N/A (no app-to-app interface changes)
           branch: astro-upgrade/automated
           base: main
           labels: dependencies
