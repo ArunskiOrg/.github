@@ -1,0 +1,84 @@
+name: Risk
+description: An identified risk — a condition that could negatively impact the project if its trigger is met.
+title: "[Risk] "
+labels: ["risk"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What could go wrong?
+    validations:
+      required: true
+
+  - type: textarea
+    id: trigger
+    attributes:
+      label: Trigger
+      description: The specific, observable condition that causes this risk to materialize. Be concrete — this is the early warning signal.
+      placeholder: "e.g., Go-live without a login screen; dependency X not delivered before sprint 4 begins"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: likelihood
+    attributes:
+      label: Likelihood
+      options:
+        - "H – likely"
+        - "M – possible"
+        - "L – unlikely"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: impact
+    attributes:
+      label: Impact
+      options:
+        - "H – severe"
+        - "M – significant"
+        - "L – minor"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Category
+      options:
+        - technical
+        - schedule
+        - resource
+        - external
+        - business
+        - security
+        - cost
+    validations:
+      required: true
+
+  - type: input
+    id: origin-context
+    attributes:
+      label: Origin context
+      description: Link to the issue (Capability, Feature, Story, etc.) that surfaced this risk.
+    validations:
+      required: false
+
+  - type: textarea
+    id: mitigation
+    attributes:
+      label: Mitigation plan
+      description: What action reduces or eliminates this risk? Leave blank if unknown — document it before moving to Watch or above.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Checklist
+      options:
+        - label: Trigger condition is specific and observable
+        - label: Owner assigned (GitHub assignee)
+        - label: Visibility labels set (visible:stage-N)
+        - label: Mitigation plan documented or risk formally accepted

@@ -1,0 +1,55 @@
+name: Story
+description: A deliverable unit of work, executable within a single sprint.
+title: "[Story] "
+labels: ["story"]
+body:
+  - type: input
+    id: parent-epic
+    attributes:
+      label: Parent epic
+      description: Link to the parent Epic issue.
+    validations:
+      required: true
+
+  - type: textarea
+    id: given
+    attributes:
+      label: Given
+      description: The initial context or preconditions.
+    validations:
+      required: true
+
+  - type: textarea
+    id: when
+    attributes:
+      label: When
+      description: The action or event under test.
+    validations:
+      required: true
+
+  - type: textarea
+    id: then
+    attributes:
+      label: Then
+      description: The expected outcome.
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Edge cases, open questions, implementation hints.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: dod
+    attributes:
+      label: Definition of Done
+      options:
+        - label: Code complete and reviewed
+        - label: Tests written and passing
+        - label: Runbook updated (if applicable)
+        - label: QA validated
+        - label: Product Owner approved (comment on this issue before closing)

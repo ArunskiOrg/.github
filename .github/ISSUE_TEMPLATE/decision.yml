@@ -1,0 +1,56 @@
+name: Decision
+description: An outstanding input needed before work can proceed — human-in-the-loop or research. Also used as the audit trail for the Architecture Change Process.
+title: "[Decision] "
+labels: ["decision"]
+body:
+  - type: textarea
+    id: proposed-change
+    attributes:
+      label: Proposed change
+      description: What change, decision, or input is needed?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reason
+    attributes:
+      label: Reason
+      description: Why is this decision needed? What is blocked without it?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What other options were evaluated, and why were they set aside?
+    validations:
+      required: false
+
+  - type: input
+    id: adr-reference
+    attributes:
+      label: ADR reference
+      description: Link to the ADR file if this decision produces or amends one.
+    validations:
+      required: false
+
+  - type: textarea
+    id: resolution
+    attributes:
+      label: Resolution
+      description: Fill this in before closing. What was decided and why?
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: approval
+    attributes:
+      label: Closure checklist
+      options:
+        - label: Self-reviewed against existing ADRs and C4 model for conflicts
+        - label: All assignees have commented
+        - label: Resolution documented above before closing
+        - label: ADR created or amended (if applicable)
+        - label: C4 model updated (if applicable)
+        - label: OpenAPI governance triggered (if API surface affected)

@@ -1,0 +1,63 @@
+name: Bug
+description: A defect in deployed or in-development software.
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Numbered steps that reliably reproduce the issue.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: Severity
+      options:
+        - critical
+        - high
+        - medium
+        - low
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Affected version / environment
+      description: "e.g. v1.2.3, prod, QA env, commit SHA"
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Logs, screenshots, workarounds, suspected cause.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: approval
+    attributes:
+      label: Closure checklist
+      options:
+        - label: Root cause identified
+        - label: Fix validated in QA environment
+        - label: Regression test added (or existing test confirmed sufficient)

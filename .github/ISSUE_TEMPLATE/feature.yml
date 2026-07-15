@@ -1,0 +1,55 @@
+name: Feature
+description: A decomposed unit of a capability, executable in Stage 4.
+title: "[Feature] "
+labels: ["feature"]
+body:
+  - type: input
+    id: parent-capability
+    attributes:
+      label: Parent capability
+      description: Link to the parent Capability issue.
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What does this feature deliver?
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance-criteria
+    attributes:
+      label: Acceptance criteria
+      description: Conditions that must be true for this feature to be considered done.
+    validations:
+      required: true
+
+  - type: input
+    id: tech-stack-layer
+    attributes:
+      label: Tech stack layer
+      description: "e.g. backend API, frontend, data pipeline, infrastructure"
+    validations:
+      required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Constraints, open questions, solution design references.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: approval
+    attributes:
+      label: Approval checklist
+      options:
+        - label: Linked to parent capability
+        - label: Acceptance criteria defined
+        - label: QA plan exists
+        - label: ADR opened for any architectural decisions introduced
+        - label: Solution architect signed off
