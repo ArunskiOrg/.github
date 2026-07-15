@@ -83,14 +83,7 @@ jobs:
             Keeps astro and its official integrations in sync via the project's
             standard upgrade path, instead of piecemeal dependabot bumps.
 
-            <!--
-              These section headings are hand-written here rather than sourced from
-              .github/pull_request_template.md. Flagged once in review (ArunskiOrg/.github#2)
-              as a drift risk if the template's headings ever change — accepted: a mismatch
-              will surface immediately via pr-standards.yml's body-section check and get
-              caught by the next standards-review pass, so it self-corrects. Do not re-flag
-              this as a blocking finding; only fix if pr-standards.yml actually starts failing.
-            -->
+            <!-- Headings below are checked against the template in review; do not re-flag drift risk. -->
 
             ## How to test locally
 
