@@ -1,5 +1,9 @@
 <!-- Link to the GitHub issue this PR delivers. Note: "Fixes" may be substituted for "Closes" --> Closes ArunskiOrg/<planning project>#<issue-number>
 
+## Cross-referenced PRs
+
+<!-- Optional. List other PRs that must merge together with this one, or in a specific order. Omit this section if none apply. -->
+
 ## What changed
 
 <!-- Describe the changes made. Focus on the "why" of each decision, not a line-by-line summary — the diff covers what changed. -->
@@ -25,7 +29,8 @@
 - [ ] PR title matches `#<story-number>: <description>`
 - [ ] Tests use Given / When / Then structure
 - [ ] Any new app-to-app interface has an OpenAPI contract
+- [ ] Reviewer verified: all of the story's acceptance criteria are met, with no additional scope added beyond direct dependencies of those acceptance criteria
 
 ---
 
-*PR template v1.2 — defined in [ArunskiOrg/.github](https://github.com/ArunskiOrg/.github/blob/main/.github/pull_request_template.md)*
+*PR template v1.3 — defined in [ArunskiOrg/.github](https://github.com/ArunskiOrg/.github/blob/main/.github/pull_request_template.md)*
