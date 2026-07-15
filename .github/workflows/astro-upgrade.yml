@@ -23,9 +23,13 @@ on:
         type: string
         default: "24"
       story-number:
-        description: "Story number to prefix the PR title/commit with, per pr-standards.yml's `#<number>: <description>` title check"
+        description: "Story number to prefix the PR title/commit with, and to close, per pr-standards.yml's `#<number>: <description>` title check. Required — no org-wide default story applies to every caller."
         type: string
-        default: "165"
+        required: true
+      story-repo:
+        description: "owner/repo that story-number lives in, e.g. ArunskiOrg/rag-sample. Required — must not be assumed to be the calling repo or any other fixed repo."
+        type: string
+        required: true
   workflow_dispatch:
     inputs:
       working-directory:
@@ -37,9 +41,13 @@ on:
         type: string
         default: "24"
       story-number:
-        description: "Story number to prefix the PR title/commit with, per pr-standards.yml's `#<number>: <description>` title check"
+        description: "Story number to prefix the PR title/commit with, and to close, per pr-standards.yml's `#<number>: <description>` title check. Required — no org-wide default story applies to every caller."
         type: string
-        default: "165"
+        required: true
+      story-repo:
+        description: "owner/repo that story-number lives in, e.g. ArunskiOrg/rag-sample. Required — must not be assumed to be the calling repo or any other fixed repo."
+        type: string
+        required: true
 
 permissions:
   contents: write
@@ -67,13 +75,22 @@ jobs:
           commit-message: "#${{ inputs.story-number }}: Upgrade astro via @astrojs/upgrade"
           title: "#${{ inputs.story-number }}: chore(${{ inputs.working-directory }}): astro upgrade"
           body: |
-            Closes ArunskiOrg/rag-sample#${{ inputs.story-number }}
+            Closes ${{ inputs.story-repo }}#${{ inputs.story-number }}
 
             ## What changed
 
             Automated run of `npx @astrojs/upgrade --yes` in `${{ inputs.working-directory }}/`.
             Keeps astro and its official integrations in sync via the project's
             standard upgrade path, instead of piecemeal dependabot bumps.
+
+            <!--
+              These section headings are hand-written here rather than sourced from
+              .github/pull_request_template.md. Flagged once in review (ArunskiOrg/.github#2)
+              as a drift risk if the template's headings ever change — accepted: a mismatch
+              will surface immediately via pr-standards.yml's body-section check and get
+              caught by the next standards-review pass, so it self-corrects. Do not re-flag
+              this as a blocking finding; only fix if pr-standards.yml actually starts failing.
+            -->
 
             ## How to test locally
 
