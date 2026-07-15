@@ -1,15 +1,12 @@
-<!-- Link to the GitHub issue this PR delivers. Note: "Fixes" may be substituted for "Closes" -->
-Closes ArunskiOrg/<planning project>#<issue-number>
+<!-- Link to the GitHub issue this PR delivers. Note: "Fixes" may be substituted for "Closes" --> Closes ArunskiOrg/<planning project>#<issue-number>
 
 ## What changed
 
-<!-- Describe the changes made. Focus on the "why" of each decision, not a line-by-line
-     summary — the diff covers what changed. -->
+<!-- Describe the changes made. Focus on the "why" of each decision, not a line-by-line summary — the diff covers what changed. -->
 
 ## How to test locally
 
-<!-- Step-by-step instructions to run and verify the change on a developer's machine.
-     Include any env vars, seed data, or services that must be running. -->
+<!-- Step-by-step instructions to run and verify the change on a developer's machine. Include any env vars, seed data, or services that must be running. -->
 
 ## How to test in QA
 
@@ -31,4 +28,4 @@ Closes ArunskiOrg/<planning project>#<issue-number>
 
 ---
 
-*PR template v1.2 — defined in [ArunskiOrg/RandomOrganizer2026](https://github.com/ArunskiOrg/RandomOrganizer2026/blob/main/.github/pull_request_template.md)*
+*PR template v1.2 — defined in [ArunskiOrg/.github](https://github.com/ArunskiOrg/.github/blob/main/.github/pull_request_template.md)*
