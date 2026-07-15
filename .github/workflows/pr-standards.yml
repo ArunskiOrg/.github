@@ -57,6 +57,6 @@ jobs:
             for s in "${missing[@]}"; do
               echo "::error::  $s"
             done
-            echo "::error::See https://github.com/ArunskiOrg/RandomOrganizer2026/blob/main/.github/pull_request_template.md"
+            echo "::error::See https://github.com/ArunskiOrg/.github/blob/main/.github/pull_request_template.md"
             exit 1
           fi
