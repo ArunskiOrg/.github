@@ -1,4 +1,8 @@
-<!-- Link to the GitHub issue this PR delivers. Note: "Fixes" may be substituted for "Closes" --> Closes ArunskiOrg/<planning project>#<issue-number>
+<!-- Link to the GitHub issue this PR delivers. Use "Closes" or "Fixes" (interchangeable, both auto-close the issue) only on the one PR that finishes the story. If the story spans multiple PRs, use "Refs" on every other one (no auto-close) and list them all under Cross-referenced PRs below. --> Closes ArunskiOrg/<planning project>#<issue-number>
+
+## Cross-referenced PRs
+
+<!-- Optional, except mandatory on a Closes/Fixes PR whose story spans multiple PRs: list every sibling PR for the story here, in merge order if one is required, even without a strict dependency. Omit this section otherwise. -->
 
 ## What changed
 
@@ -25,7 +29,8 @@
 - [ ] PR title matches `#<story-number>: <description>`
 - [ ] Tests use Given / When / Then structure
 - [ ] Any new app-to-app interface has an OpenAPI contract
+- [ ] Reviewer verified: all of the story's acceptance criteria are met, with no additional scope added beyond direct dependencies of those acceptance criteria
 
 ---
 
-*PR template v1.2 — defined in [ArunskiOrg/.github](https://github.com/ArunskiOrg/.github/blob/main/.github/pull_request_template.md)*
+*PR template v1.4 — defined in [ArunskiOrg/.github](https://github.com/ArunskiOrg/.github/blob/main/.github/pull_request_template.md)*
