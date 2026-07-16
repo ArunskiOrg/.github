@@ -1,0 +1,107 @@
+name: Astro upgrade
+
+# ─── How this workflow fires ────────────────────────────────────────────────
+#
+# Two triggers:
+#
+#   workflow_call     — called from a product repo's own astro-upgrade.yml
+#                        caller, which supplies the schedule (schedule events
+#                        only fire in the repo that owns the workflow file,
+#                        so each consuming repo needs a thin caller).
+#
+#   workflow_dispatch — manual run, for testing this workflow standalone.
+
+on:
+  workflow_call:
+    inputs:
+      working-directory:
+        description: "Path to the astro project (contains package.json)"
+        type: string
+        default: "docs-site"
+      node-version:
+        description: "Node.js version to run the upgrade with"
+        type: string
+        default: "24"
+      story-number:
+        description: "Story number to prefix the PR title/commit with, and to close, per pr-standards.yml's `#<number>: <description>` title check. Required — no org-wide default story applies to every caller."
+        type: string
+        required: true
+      story-repo:
+        description: "owner/repo that story-number lives in, e.g. ArunskiOrg/rag-sample. Required — must not be assumed to be the calling repo or any other fixed repo."
+        type: string
+        required: true
+  workflow_dispatch:
+    inputs:
+      working-directory:
+        description: "Path to the astro project (contains package.json)"
+        type: string
+        default: "docs-site"
+      node-version:
+        description: "Node.js version to run the upgrade with"
+        type: string
+        default: "24"
+      story-number:
+        description: "Story number to prefix the PR title/commit with, and to close, per pr-standards.yml's `#<number>: <description>` title check. Required — no org-wide default story applies to every caller."
+        type: string
+        required: true
+      story-repo:
+        description: "owner/repo that story-number lives in, e.g. ArunskiOrg/rag-sample. Required — must not be assumed to be the calling repo or any other fixed repo."
+        type: string
+        required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  upgrade:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.working-directory }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - name: Run astro upgrade
+        run: npx @astrojs/upgrade --yes
+
+      - name: Open PR if anything changed
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "#${{ inputs.story-number }}: Upgrade astro via @astrojs/upgrade"
+          title: "#${{ inputs.story-number }}: chore(${{ inputs.working-directory }}): astro upgrade"
+          body: |
+            Closes ${{ inputs.story-repo }}#${{ inputs.story-number }}
+
+            ## What changed
+
+            Automated run of `npx @astrojs/upgrade --yes` in `${{ inputs.working-directory }}/`.
+            Keeps astro and its official integrations in sync via the project's
+            standard upgrade path, instead of piecemeal dependabot bumps.
+
+            <!-- Headings below are checked against the template in review; do not re-flag drift risk. -->
+
+            ## How to test locally
+
+            `cd ${{ inputs.working-directory }} && npm install && npm run build`
+
+            ## How to test in QA
+
+            Same as local.
+
+            ## Tests completed
+
+            - [ ] Manual smoke test performed — review the diff and confirm the build passes before merging
+
+            ## Standards checklist
+
+            - [x] PR title matches `#<story-number>: <description>`
+            - [x] Tests use Given / When / Then structure — N/A (no test code in this PR)
+            - [x] Any new app-to-app interface has an OpenAPI contract — N/A (no app-to-app interface changes)
+          branch: astro-upgrade/automated
+          base: main
+          labels: dependencies
