@@ -29,7 +29,7 @@
 - [ ] PR title matches `#<story-number>: <description>`
 - [ ] Tests use Given / When / Then structure
 - [ ] Any new app-to-app interface has an OpenAPI contract
-- [ ] Deployment items added to the canonical deployment plan
+- [ ] Canonical deployment plan updated to reflect deployment changes
 - [ ] Reviewer verified: all of the story's acceptance criteria are met, with no additional scope added beyond direct dependencies of those acceptance criteria
 
 ---
