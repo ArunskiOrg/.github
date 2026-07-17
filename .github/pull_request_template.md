@@ -29,8 +29,9 @@
 - [ ] PR title matches `#<story-number>: <description>`
 - [ ] Tests use Given / When / Then structure
 - [ ] Any new app-to-app interface has an OpenAPI contract
+- [ ] Deployment items added to the canonical deployment plan
 - [ ] Reviewer verified: all of the story's acceptance criteria are met, with no additional scope added beyond direct dependencies of those acceptance criteria
 
 ---
 
-*PR template v1.5 — the canonical PR summary checklist, defined in [ArunskiOrg/.github](https://github.com/ArunskiOrg/.github/blob/main/.github/pull_request_template.md). The detailed rules behind each item are canonical in [`dev-standards.md`](https://github.com/ArunskiOrg/org-standards/blob/main/docs/standards/dev-standards.md) (ArunskiOrg/org-standards).*
+*PR template v1.6 — the canonical PR summary checklist, defined in [ArunskiOrg/.github](https://github.com/ArunskiOrg/.github/blob/main/.github/pull_request_template.md). The detailed rules behind each item are canonical in [`dev-standards.md`](https://github.com/ArunskiOrg/org-standards/blob/main/docs/standards/dev-standards.md) (ArunskiOrg/org-standards).*
