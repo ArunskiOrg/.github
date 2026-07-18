@@ -47,7 +47,6 @@ Example: `This PR closes the issue; merge all others first: backend PR ArunskiOr
 - [ ] Acceptance criteria met by this specific PR
   - [ ] No additional scope beyond direct dependencies of those acceptance criteria
   - [list PR-relevant acceptance criteria, summarized]
-- [ ] On the closing PR only (Closes/Fixes): reviewer verified ALL of the story's acceptance criteria are met across every PR in the story, not just this one
 
 ---
 
