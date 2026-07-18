@@ -3,20 +3,20 @@
 Elements:
 - KEYWORD options:
   1. Auto-closing keyword: "Closes" for stories; "Fixes" for bugs
-     - auto-closes the issue
-     - Use an auto-closing action on exactly one PR per story - the PR that definitively finishes the story
-     - Do NOT apply this action to any PR related to evergreen stories
+     - auto-closes the issue, including across repositories, as long as the PR targets the default branch
+     - Use an auto-closing keyword on exactly one PR per story - the PR that definitively finishes the story
+     - Do NOT apply this keyword to any PR related to evergreen stories
   2. Referencing keyword: "Refs"
      - Does not close the issue
-     - If a story is labeled "evergreen", use this action exclusively (no Closes or Fixes)
-     - if a story spans multiple PRs, all but one PR uses "Refs"
+     - If a story is labeled "evergreen", use this keyword exclusively (no Closes or Fixes)
+     - If a story spans multiple PRs, all but one PR uses "Refs"
 - REPOSITORY:
   - Use the planning repo - every project has a planning repo that holds its ADRs and github issues.
   - Identified by naming convention. Example: `rag-sample-app` uses `rag-sample` as its planning repo
-  - if the PR is in the same project where the story is defined, omit `ArunskiOrg/<REPOSITORY>`. The format becomes `<KEYWORD> #<ISSUE-NUMBER>`
+  - If the PR is in the same repository where the story is defined, omit `ArunskiOrg/[REPOSITORY]`. The format becomes `[KEYWORD] #[ISSUE-NUMBER]`
 - ISSUE-NUMBER: the issue that this PR addresses
 -->
-<KEYWORD> ArunskiOrg/<REPOSITORY>#<ISSUE-NUMBER>
+[KEYWORD] ArunskiOrg/[REPOSITORY]#[ISSUE-NUMBER]
 
 ## Cross-referenced PRs
 <!-- Mandatory when a story spans multiple PRs; otherwise omitted. List all related PRs for the story. Show dependencies where they exist.
@@ -43,10 +43,11 @@ Example: `This PR closes the issue; merge all others first: backend PR ArunskiOr
 - [ ] PR title matches `#<story-number>: <description>`
 - [ ] Tests use Given / When / Then structure
 - [ ] Any new app-to-app interface has an OpenAPI contract
-- [ ] Current project's deployment plan is updated to reflect deployment changes
+- [ ] If this PR changes deployment: the current project's deployment plan is updated to reflect it (otherwise N/A)
 - [ ] Acceptance criteria met by this specific PR
   - [ ] No additional scope beyond direct dependencies of those acceptance criteria
-  - <list PR-relevant acceptance criteria (summarized)>
+  - [list PR-relevant acceptance criteria, summarized]
+- [ ] On the closing PR only (Closes/Fixes): reviewer verified ALL of the story's acceptance criteria are met across every PR in the story, not just this one
 
 ---
 
