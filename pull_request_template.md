@@ -50,4 +50,4 @@ Example: `This PR closes the issue; merge all others first: backend PR ArunskiOr
 
 ---
 
-*PR template v1.6 — the canonical PR summary checklist, defined in [ArunskiOrg/.github](https://github.com/ArunskiOrg/.github/blob/main/.github/pull_request_template.md). The detailed rules behind each item are canonical in [`dev-standards.md`](https://github.com/ArunskiOrg/org-standards/blob/main/docs/standards/dev-standards.md) (ArunskiOrg/org-standards).*
+*PR template v1.6 — the canonical PR summary checklist. The detailed rules behind each item are canonical in [`dev-standards.md`](https://github.com/ArunskiOrg/org-standards/blob/main/docs/standards/dev-standards.md) (ArunskiOrg/org-standards).*
