@@ -21,7 +21,7 @@ Elements:
 ## Cross-referenced PRs
 <!-- Mandatory when a story spans multiple PRs; otherwise omitted. List all related PRs for the story. Show dependencies where they exist.
 
-Example: `This PR closes the issue; merge all others first: backend PR ArunskiOrg/rag-sample-app#34 depends on Design PR ArunskiOrg/rag-sample#42; and related PRs without strict dependency order: ArunskiOrg/.github#12, ArunskiOrg/org-stardards#5` -->
+Example: `This PR closes the issue; merge all others first: backend PR ArunskiOrg/rag-sample-app#34 depends on Design PR ArunskiOrg/rag-sample#42; and related PRs without strict dependency order: ArunskiOrg/.github#12, ArunskiOrg/org-standards#5` -->
 
 ## What changed
 <!-- Describe the changes made. Focus on function and impact, not a line-by-line summary — the diff covers what changed. -->
