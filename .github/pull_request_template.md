@@ -14,7 +14,7 @@ Elements:
   - Every project has a planning repo that holds its ADRs and github issues.
   - Identified by naming convention. Example: `rag-sample-app` uses `rag-sample` as its planning repo
   - if the PR is in the same project where the story is defined, omit `ArunskiOrg/<REPOSITORY>`. The format becomes `<KEYWORD> #<ISSUE-NUMBER>`
-- ISSUE-NUMBER: the issue that this PR addresses  
+- ISSUE-NUMBER: the issue that this PR addresses
 -->
 <KEYWORD> ArunskiOrg/<REPOSITORY>#<ISSUE-NUMBER>
 
