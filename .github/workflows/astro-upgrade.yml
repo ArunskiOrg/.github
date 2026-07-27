@@ -105,3 +105,4 @@ jobs:
           branch: astro-upgrade/automated
           base: main
           labels: dependencies
+          sign-commits: true
