@@ -23,7 +23,7 @@ on:
         type: string
         default: "24"
       story-number:
-        description: "Story number to prefix the PR title/commit with, and to close, per pr-standards.yml's `#<number>: <description>` title check. Required — no org-wide default story applies to every caller."
+        description: "Story number to prefix the PR title/commit with, and reference (Refs), per pr-standards.yml's `#<number>: <description>` title check. Required — no org-wide default story applies to every caller."
         type: string
         required: true
       story-repo:
@@ -41,7 +41,7 @@ on:
         type: string
         default: "24"
       story-number:
-        description: "Story number to prefix the PR title/commit with, and to close, per pr-standards.yml's `#<number>: <description>` title check. Required — no org-wide default story applies to every caller."
+        description: "Story number to prefix the PR title/commit with, and reference (Refs), per pr-standards.yml's `#<number>: <description>` title check. Required — no org-wide default story applies to every caller."
         type: string
         required: true
       story-repo:
@@ -75,7 +75,7 @@ jobs:
           commit-message: "#${{ inputs.story-number }}: Upgrade astro via @astrojs/upgrade"
           title: "#${{ inputs.story-number }}: chore(${{ inputs.working-directory }}): astro upgrade"
           body: |
-            Closes ${{ inputs.story-repo }}#${{ inputs.story-number }}
+            Refs ${{ inputs.story-repo }}#${{ inputs.story-number }}
 
             ## What changed
 
