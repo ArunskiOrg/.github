@@ -66,8 +66,13 @@ jobs:
         with:
           node-version: ${{ inputs.node-version }}
 
+      # @astrojs/upgrade asks "Some packages have breaking changes. Continue?"
+      # when any update is a major bump, and has no flag to skip it. With no
+      # stdin input the prompt cancels and the tool exits 0 without upgrading,
+      # so pipe the answer in. `--yes` before the package name is npx's own
+      # flag, skipping npx's install prompt.
       - name: Run astro upgrade
-        run: npx @astrojs/upgrade --yes
+        run: echo y | npx --yes @astrojs/upgrade
 
       - name: Open PR if anything changed
         uses: peter-evans/create-pull-request@v8
@@ -79,9 +84,11 @@ jobs:
 
             ## What changed
 
-            Automated run of `npx @astrojs/upgrade --yes` in `${{ inputs.working-directory }}/`.
+            Automated run of `npx @astrojs/upgrade` in `${{ inputs.working-directory }}/`.
             Keeps astro and its official integrations in sync via the project's
             standard upgrade path, instead of piecemeal dependabot bumps.
+            Major-version bumps are accepted automatically; check the diff for
+            any and read their CHANGELOGs before merging.
 
             <!-- Headings below are checked against the template in review; do not re-flag drift risk. -->
 
